@@ -13,7 +13,7 @@ CHAT_ID = None  # Chat ID, откуда будут браться пользов
 CHANNEL_ID = None  # Channel ID, куда будут добавляться пользователи
 
 CheatBot = Client(
-	"asd",
+    "CheatBot",
     "api_id",  # api_id (https://my.telegram.org/app)
     "api_hash",  # api_hash (https://my.telegram.org/app)
 )
@@ -41,7 +41,7 @@ async def main():
                 await asyncio.sleep(e.value)
             except UserBot:
                 continue
-            except UserBlocked:
+	    except UserBlocked:
                 continue
             except UserPrivacyRestricted:
             	continue

@@ -1,7 +1,6 @@
 from CheatBot import CheatBot
 from datetime import datetime
 
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid
 from pyrogram.errors.exceptions.bad_request_400 import UserBot
 from pyrogram.errors.exceptions.forbidden_403 import UserPrivacyRestricted
 

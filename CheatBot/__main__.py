@@ -9,13 +9,13 @@ GREEN = "\u001b[32;1m"
 YELLOW = "\u001b[33;1m"
 RESET = "\u001b[0m"
 
-CHAT_ID = None  # int
-CHANNEL_ID = None  # int
 
-
-async def main():
+async def user_invitation(
+    chat_id: int,
+    channel_id: int,
+):
     async with CheatBot:
-        async for member in CheatBot.get_chat_members(CHAT_ID):
+        async for member in CheatBot.get_chat_members(chat_id):
             ctime = datetime.now().strftime("%H:%M:%S")
 
             print(
@@ -25,7 +25,7 @@ async def main():
 
             try:
                 await CheatBot.add_chat_members(
-                    CHANNEL_ID,
+                    channel_id,
                     member.user.id,
                 )
             except UserBot:
@@ -46,7 +46,12 @@ async def main():
 
 if __name__ == "__main__":
     try:
-        CheatBot.run(main())
+        CheatBot.run(
+            user_invitation(
+                None,
+                None,
+            )
+        )
     except KeyboardInterrupt:
         exit()
 

@@ -15,6 +15,26 @@ YELLOW = "\u001b[33;1m"
 RESET = "\u001b[0m"
 
 
+async def member_parsing(parse_from: int = None) -> None:
+    async with CheatBot:
+        async for member in CheatBot.get_chat_members(parse_from):
+            time = datetime.now().strftime("%H:%M:%S")
+
+            if member.user.is_self:
+                continue
+
+            if member.user.is_deleted:
+                continue
+
+            if member.user.is_bot:
+                continue
+
+            with open(r"member_IDs.txt", "a") as file:
+                file.write(f"{member.user.id}\n")
+
+            print(GREEN + time, RESET + f"{member.user.id} ({member.user.first_name})")
+
+
 async def user_invitation(parse_from: int = None, invite_to: int = None) -> None:
 
     if parse_from is None and invite_to is None:
@@ -35,16 +55,17 @@ async def user_invitation(parse_from: int = None, invite_to: int = None) -> None
                 await asyncio.sleep(e.value)
                 continue
 
-            except UserBot:
-                print(RED + time, RESET + f"{member.user.id}", YELLOW + "(User bot)")
-                continue
-
             except UserPrivacyRestricted:
                 print(RED + time, RESET + f"{member.user.id}", YELLOW + "(Privacy restricted)")
                 continue
 
             except UserNotMutualContact:
                 print(RED + time, RESET + f"{member.user.id}", YELLOW + "(Not mutual contact)")
+                continue
+
+            except UserBot:
+                print(RED + time, RESET + f"{member.user.id}", YELLOW + "(User bot)")
+                continue
 
             except PeerFlood:
                 print(RED + time, RESET + "Peer flood", YELLOW + "(Account limited)")

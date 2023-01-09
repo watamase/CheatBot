@@ -1,79 +1,82 @@
-import asyncio
+import os
+import argparse
+import colorama
 
 from CheatBot import CheatBot
 from datetime import datetime
+from colorama import Fore, Style
 
-from pyrogram.errors.exceptions.flood_420 import FloodWait
-from pyrogram.errors.exceptions.forbidden_403 import UserPrivacyRestricted
-from pyrogram.errors.exceptions.bad_request_400 import UserNotMutualContact
-from pyrogram.errors.exceptions.bad_request_400 import UserBot
-from pyrogram.errors.exceptions.bad_request_400 import PeerFlood
+from member_parsing import member_parsing
+from user_invitation import user_invitation
 
-RED = "\u001b[31;1m"
-GREEN = "\u001b[32;1m"
-YELLOW = "\u001b[33;1m"
-RESET = "\u001b[0m"
+colorama.init(autoreset=True)
 
 
-async def member_parsing(parse_from: int = None) -> None:
-    async with CheatBot:
-        async for member in CheatBot.get_chat_members(parse_from):
-            time = datetime.now().strftime("%H:%M:%S")
+def clear_console() -> None:
+    command = "clear"
 
-            if member.user.is_self:
-                continue
+    if os.name in ("nt", "dos"):
+        command = "cls"
 
-            if member.user.is_deleted:
-                continue
-
-            if member.user.is_bot:
-                continue
-
-            with open(r"member_IDs.txt", "a") as file:
-                file.write(f"{member.user.id}\n")
-
-            print(GREEN + time, RESET + f"{member.user.id} ({member.user.first_name})")
+    os.system(command)
 
 
-async def user_invitation(parse_from: int = None, invite_to: int = None) -> None:
+def main(use_member_parsing: bool = False, use_user_invitation: bool = False) -> None:
+    if (use_member_parsing and use_user_invitation) or (not use_member_parsing and not use_user_invitation):
+        print(
+            Style.BRIGHT + Fore.RED + datetime.now().strftime("%H:%M:%S"),
+            Fore.RESET + "Two arguments cannot have the same value",
+        )
 
-    if parse_from is None and invite_to is None:
-        print(RED + datetime.now().strftime("%H:%M:%S"), RESET + "Pass values to function arguments")
-        return
+    if use_member_parsing:
+        try:
+            parse_from = int(input("Parse from (ID): "))
+        except ValueError:
+            print(
+                Style.BRIGHT + Fore.RED + datetime.now().strftime("%H:%M:%S"),
+                Fore.RESET + "Value error",
+            )
+            exit()
+        except KeyboardInterrupt:
+            clear_console()
+            exit()
 
-    async with CheatBot:
-        async for member in CheatBot.get_chat_members(parse_from):
-            time = datetime.now().strftime("%H:%M:%S")
+        clear_console()
+        CheatBot.run(member_parsing(parse_from))
 
-            try:
-                await CheatBot.add_chat_members(invite_to, member.user.id)
-                print(GREEN + time, RESET + f"{member.user.id} ({member.user.first_name})")
-                continue
+    if use_user_invitation:
+        try:
+            parse_from = int(input("Parse from (ID): "))
+            invite_to = int(input("Invite to (ID): "))
+        except ValueError:
+            print(
+                Style.BRIGHT + Fore.RED + datetime.now().strftime("%H:%M:%S"),
+                Fore.RESET + "Value error",
+            )
+            exit()
+        except KeyboardInterrupt:
+            clear_console()
+            exit()
 
-            except FloodWait as e:
-                print(RED + time, RESET + "Flood wait:", YELLOW + f"{e.value}")
-                await asyncio.sleep(e.value)
-                continue
+        clear_console()
+        CheatBot.run(user_invitation(parse_from, invite_to))
 
-            except UserPrivacyRestricted:
-                print(RED + time, RESET + f"{member.user.id}", YELLOW + "(Privacy restricted)")
-                continue
 
-            except UserNotMutualContact:
-                print(RED + time, RESET + f"{member.user.id}", YELLOW + "(Not mutual contact)")
-                continue
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--member_parsing",
+    help="Iterating over member IDs and writing them to a file (Bool) [True/False]",
+    action="store_true",
+    default=False,
+)
+parser.add_argument(
+    "--user_invitation",
+    help="Invite users to chat/channel (Bool) [True/False]",
+    action="store_true",
+    default=False,
+)
 
-            except UserBot:
-                print(RED + time, RESET + f"{member.user.id}", YELLOW + "(User bot)")
-                continue
-
-            except PeerFlood:
-                print(RED + time, RESET + "Peer flood", YELLOW + "(Account limited)")
-                break
-        return
+args = parser.parse_args()
 
 if __name__ == "__main__":
-    try:
-        CheatBot.run(user_invitation(None, None))  # Replace with chat/channel IDs
-    except KeyboardInterrupt:
-        exit()
+    main(args.member_parsing, args.user_invitation)

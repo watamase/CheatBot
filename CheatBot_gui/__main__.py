@@ -6,6 +6,7 @@ from CheatBot_gui import (
     CheatBotMainGUI,
     CheatBotParsingGUI,
     CheatBotInvitation,
+    CheatBotSpam,
 )
 
 if __name__ == "__main__":
@@ -19,5 +20,8 @@ if __name__ == "__main__":
 
     invitation_window = CheatBotInvitation()
     invitation_window.show()
+
+    spam_window = CheatBotSpam()
+    spam_window.show()
 
     sys.exit(app.exec())

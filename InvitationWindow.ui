@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InvitationWindow</class>
+ <widget class="QMainWindow" name="InvitationWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>210</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CheatBot (Invitation)</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+	color: #ffffff;
+	background-color: #121212;
+}
+
+QLineEdit {
+	border: 2px solid #ffffff;
+	border-radius: 12px;
+	padding: 4px;
+}
+
+QPushButton {
+	border: 2px solid #ffffff;
+	border-radius: 12px;
+	font-size: 24px;
+}
+
+QPushButton:hover {
+	color: #bfbfbf;
+	border: 2px solid #bfbfbf;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="line_edit_parse_from">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>361</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Parse from: Chat/Channel ID</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="line_edit_invite_to">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>361</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Invite to: Chat/Channel ID</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_start">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>361</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

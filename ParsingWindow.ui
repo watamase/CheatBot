@@ -37,7 +37,7 @@ QPushButton:hover {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="line_edit_id">
+   <widget class="QLineEdit" name="line_edit_parse_from">
     <property name="geometry">
      <rect>
       <x>20</x>

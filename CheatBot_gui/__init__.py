@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QMainWindow
 from MainWindow import Ui_MainWindow
 from ParsingWindow import Ui_ParsingWindow
 from InvitationWindow import Ui_InvitationWindow
+from SpamWindow import Ui_SpamWindow
 
 
 class CheatBotMainGUI(QMainWindow):
@@ -26,4 +27,12 @@ class CheatBotInvitation(QMainWindow):
         super().__init__()
 
         self.ui = Ui_InvitationWindow()
+        self.ui.setupUi(self)
+
+
+class CheatBotSpam(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.ui = Ui_SpamWindow()
         self.ui.setupUi(self)

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>330</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,19 +88,6 @@ QLabel {
     </property>
     <property name="text">
      <string>Spam</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_about">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>310</y>
-      <width>261</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>About</string>
     </property>
    </widget>
   </widget>

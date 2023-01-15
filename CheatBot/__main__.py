@@ -29,7 +29,7 @@ async def member_parsing(parse_from: int = None) -> None:
             if member.user.is_bot:
                 continue
 
-            with open(r"member_IDs.txt", "a") as file:
+            with open(r"member_IDs.txt", "a", encoding="utf-8") as file:
                 file.write(f"{member.user.id}\n")
 
             print(GREEN + time, RESET + f"{member.user.id} ({member.user.first_name})")
